@@ -2,12 +2,12 @@
 #include "common_cifrado.h"
 int main() {
 
-   char method[] = "vigenere";
+   char method[] = "cesar";
    int key = 5;
    char key2[] = "SecureKey"; 
    size_t tamanio = 3;
-   char palabra[] = "Secret  message";
-   void *key1 = &key2;
+   char palabra[] = "Pan";
+   void *key1 = &key;
    cifrado_t cifrado;
    cifrado_create(&cifrado, method, key1);
    printf("Antes de encriptar %s\n", palabra);

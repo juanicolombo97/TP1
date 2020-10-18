@@ -10,16 +10,16 @@ void cifrado_create(cifrado_t *self, char *method, void *key) {
 }
 
 void cifrado_encriptar(cifrado_t *self, char* message, size_t *message_size) {
-    cifrado_elegir(self, message, message_size, "encriptar");
+    cifrado_elegir(self, message, message_size, "encriptar", cifrado_proceso_encriptar);
 }
 
 void cifrado_desencriptar(cifrado_t *self, char* message, size_t *message_size){
-    cifrado_elegir(self, message, message_size, "desencriptar");
+    cifrado_elegir(self, message, message_size, "desencriptar", cifrado_proceso_desencriptar);
 }
 
-void cifrado_elegir(cifrado_t *self, char* message, size_t *message_size,char* type){
+void cifrado_elegir(cifrado_t *self, char* message, size_t *message_size,char* type,  void(*f)(char*, int)){
     if (!strcmp(self->method, "cesar")) {                   // Me fijo si el metodo es el cesar y llamo a la funcion respectiva para cifrar.
-        cifrado_cesar(self, message, message_size, type);
+        cifrado_cesar(self, message, message_size, type, f);
     } else if (!strcmp(self->method, "vigenere")) {         // Me fijo si el metodo es vigenere y llamo a la funcion respectiva para cifrar.
         cifrado_vigenere(self, message);
     } else if (!strcmp(self->method, "rc4")) {              // Me fijo si el metodo es rc4 y llamo a la funcion respectiva para cifrar.
@@ -28,19 +28,22 @@ void cifrado_elegir(cifrado_t *self, char* message, size_t *message_size,char* t
     
 }
 
-void cifrado_cesar(cifrado_t *self, char* message, size_t *message_size,char* type) {
+void cifrado_cesar(cifrado_t *self, char* message, size_t *message_size,char* type,  void(*f)(char*, int)) {
     for (size_t i = 0; i < *message_size; i++) {
-        if(!strcmp(type, "encriptar")){
-            *message = ((*message + (*(int*)(self->key))) % 256);
-        
-        } else {
-            *message = ((*message - (*(int*)(self->key))) % 256);
-        }
+        f(message,*(int*)(self->key));
         message++;        
     }
     
 }
 
+
+void cifrado_proceso_encriptar(char* message, int key) {
+    *message = (*message + key ) % 256;
+}
+
+void cifrado_proceso_desencriptar(char* message, int key) {
+    *message = (*message - key ) % 256;
+}
 void cifrado_vigenere(cifrado_t *self, char* message) {
 
    printf("dqjhfwuehfuhwef");

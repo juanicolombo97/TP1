@@ -45,17 +45,18 @@ void cifrado_proceso_desencriptar(char* message, int key) {
 }
 
 void cifrado_vigenere(cifrado_t *self, char* message, size_t *message_size) {
-    char* key_aux = self->key;
-    int size_key = strlen(key_aux)
-    for (size_t i = 0; i < *message_size; i++)
-    {
-        if()
-        printf("%d", *key_aux);
+    int key_size = strlen(self->key);
+    char *key_aux = self->key;
+    for (size_t i = 0; i < *message_size; i++) {
+        if (key_size == i) {
+            key_aux -= key_size;
+        }
+        int ascii_value = *key_aux;
+
+        printf("%d", ascii_value );
         key_aux++;
         message++;
     }
-    
-  
 }
 
 void cifrado_destroy(cifrado_t *self) {

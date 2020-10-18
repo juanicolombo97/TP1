@@ -21,7 +21,7 @@ void cifrado_elegir(cifrado_t *self, char* message, size_t *message_size,char* t
     if (!strcmp(self->method, "cesar")) {                   // Me fijo si el metodo es el cesar y llamo a la funcion respectiva para cifrar.
         cifrado_cesar(self, message, message_size, type, f);
     } else if (!strcmp(self->method, "vigenere")) {         // Me fijo si el metodo es vigenere y llamo a la funcion respectiva para cifrar.
-        cifrado_vigenere(self, message);
+        cifrado_vigenere(self, message, message_size);
     } else if (!strcmp(self->method, "rc4")) {              // Me fijo si el metodo es rc4 y llamo a la funcion respectiva para cifrar.
         printf("rc44444444444");
     } else printf("Metodo incorrecto");
@@ -36,7 +36,6 @@ void cifrado_cesar(cifrado_t *self, char* message, size_t *message_size,char* ty
     
 }
 
-
 void cifrado_proceso_encriptar(char* message, int key) {
     *message = (*message + key ) % 256;
 }
@@ -44,9 +43,19 @@ void cifrado_proceso_encriptar(char* message, int key) {
 void cifrado_proceso_desencriptar(char* message, int key) {
     *message = (*message - key ) % 256;
 }
-void cifrado_vigenere(cifrado_t *self, char* message) {
 
-   printf("dqjhfwuehfuhwef");
+void cifrado_vigenere(cifrado_t *self, char* message, size_t *message_size) {
+    char* key_aux = self->key;
+    int size_key = strlen(key_aux)
+    for (size_t i = 0; i < *message_size; i++)
+    {
+        if()
+        printf("%d", *key_aux);
+        key_aux++;
+        message++;
+    }
+    
+  
 }
 
 void cifrado_destroy(cifrado_t *self) {

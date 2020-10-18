@@ -21,7 +21,7 @@ void cifrado_elegir(cifrado_t *self, char* message, size_t *message_size, char* 
 
 void cifrado_cesar(cifrado_t *self, char* message, size_t *message_size, char* type, void(*f)(char*, int));
 
-void cifrado_vigenere(cifrado_t *self, char* message);
+void cifrado_vigenere(cifrado_t *self, char* message, size_t *messega_size);
 
 void cifrado_destroy(cifrado_t *self);
 

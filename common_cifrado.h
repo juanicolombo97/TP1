@@ -23,19 +23,19 @@ void cifrado_cesar(cifrado_t *self, char* message, size_t *message_size, void(*f
 
 void cifrado_vigenere(cifrado_t *self, char* message, size_t *messega_size,  void(*f)(char*, int));
 
-void cifrado_rc4(cifrado_t *self);
+void cifrado_rc4(cifrado_t *self, size_t *message_size, char *message,  void(*f)(char*, int));
 
 void cifrado_proceso_encriptar(char* message, int key);
 
 void cifrado_proceso_desencriptar(char* message, int key);
 
-void cifrado_rc4_ksa(cifrado_t *self,int vector[]);
+void cifrado_rc4_ksa(cifrado_t *self,int vector[] , int key_size);
 
 void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[]);
 
 void cifrado_rc4_swap(cifrado_t *self, int vector[], int i, int j);
 
-void cifrado_rc4_prga(cifrado_t *self, int vector[]);
+void cifrado_rc4_prga(cifrado_t *self, int vector[], size_t *message_size, char *message, int resultado[]);
 
 void cifrado_destroy(cifrado_t *self);
 

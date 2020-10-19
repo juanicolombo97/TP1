@@ -23,7 +23,7 @@ void cifrado_elegir(cifrado_t *self, char* message, size_t *message_size,  void(
     } else if (!strcmp(self->method, "vigenere")) {         // Me fijo si el metodo es vigenere y llamo a la funcion respectiva para cifrar.
         cifrado_vigenere(self, message, message_size, f);
     } else if (!strcmp(self->method, "rc4")) {              // Me fijo si el metodo es rc4 y llamo a la funcion respectiva para cifrar.
-        cifrado_rc4(self);
+        cifrado_rc4(self,message_size, message, f);
     };
 }
 
@@ -56,13 +56,17 @@ void cifrado_vigenere(cifrado_t *self, char* message, size_t *message_size, void
     }
 }
 
-
-void cifrado_rc4(cifrado_t *self) {
+void cifrado_rc4(cifrado_t *self, size_t *message_size, char *message,  void(*f)(char*, int)) {
     int vector[256];
-    char vector_key[256];
     int key_size = strlen(self->key);
+    int resultado[*message_size];
     cifrado_rc4_inicializar_vectores(self, vector);
-    cifrado_rc4_ksa(self, vector);
+    cifrado_rc4_ksa(self, vector, key_size);
+    cifrado_rc4_prga(self, vector, message_size, message, resultado);
+    for (int x = 0; x < *message_size; x++) {
+        f(message,resultado[x]);
+        message++;
+    }
 }
 
 void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[]){
@@ -72,25 +76,29 @@ void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[]){
     
 }
 
-void cifrado_rc4_ksa(cifrado_t *self, int vector[]){
+void cifrado_rc4_ksa(cifrado_t *self, int vector[], int key_size){
     int i, j=0;
     for (i = 0; i < 256; i++) {
-        int key_char = *(char*)( self->key + (i % 5));
-        printf("%d\n", key_char);
-        j = (j + vector[i] + *((int*)self->key +  i )) % 256;
-       
+        int key_char = *(char*)( self->key + (i % key_size));
+        j = (j + vector[i] + key_char) % 256;
+        cifrado_rc4_swap(self, vector, i , j);
     }
 }
 
 void cifrado_rc4_swap(cifrado_t *self, int vector[], int i, int j) {
     int aux = vector[i];
-    printf("%d", aux);
     vector[i] = vector[j];
     vector[j] = aux;
 }
 
-void cifrado_rc4_prga(cifrado_t *self, int vector[]) {
-
+void cifrado_rc4_prga(cifrado_t *self, int vector[], size_t *message_size, char *message, int resultado[]) {
+    int i, j =0;
+    for (int x = 0; x < *message_size; x++) {
+        i = (i + 1) % 256;
+        j = ( j + vector[j]) % 256;
+        cifrado_rc4_swap(self, vector, i, j);
+        resultado[x]=vector[( vector[i] + vector[j]) % 256];
+    }
 }
 
 void cifrado_destroy(cifrado_t *self) {

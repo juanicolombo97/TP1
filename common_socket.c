@@ -23,7 +23,7 @@ int socket_bind_and_listen(socket_t *self) {
    }
    listen(self->socket, 10);    
    socklen_t client_size = sizeof(self->client);
-   return accept(self->socket, (struct sockaddr *)&self->client,&client_size);
+   self->new_socket =  accept(self->socket, (struct sockaddr *)&self->client,&client_size);
 
 }
 
@@ -32,7 +32,7 @@ int socket_send(socket_t *self, const char* buffer, size_t lenght) {
 }
 
 int socket_receive(socket_t *self, void *buffer, size_t lenght) {
-    return recv(self->socket, buffer, 64, 0);
+    return recv(self->new_socket, buffer, 64, 0);
 }
 
 int socket_shutdown(socket_t *self, int how) {

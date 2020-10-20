@@ -15,4 +15,4 @@
 ![diagrama](https://user-images.githubusercontent.com/49823710/96625977-41761300-12e5-11eb-8f9e-30a58a999685.png)
 
 
-##### En el siguiente diagrama podemos ver como funciona el programa. Vemos como el cliente esta asociado a un cifrador_t y tambien a un socket. Lo mismo para para el servidor. Finalmente vemos como el cliente es una agregacin del servidor. Esto es porque cuando el servidor deja de existir el cliente sigue existiendo. Y vemos como un cliente puede estar conectado a un servidor, y un servidor recibir multiples clientes.
+#### En el siguiente diagrama podemos ver como funciona el programa. Vemos como el cliente esta asociado a un cifrador_t y tambien a un socket. Lo mismo para para el servidor. Finalmente vemos como el cliente es una agregacin del servidor. Esto es porque cuando el servidor deja de existir el cliente sigue existiendo. Y vemos como un cliente puede estar conectado a un servidor, y un servidor recibir multiples clientes.

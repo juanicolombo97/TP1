@@ -40,6 +40,7 @@ int socket_bind(socket_t *self, int port) {
     if (bind(self->socket, (struct sockaddr *)&server, sizeof(server)) < 0) {
         printf("BINd failed");
     }
+    return 0;
 }
 
 int socket_listen(socket_t *self) {
@@ -57,10 +58,6 @@ int socket_send(socket_t *self, const char* buffer, size_t lenght) {
 
 int socket_receive(socket_t *self, void *buffer, size_t lenght) {
     return recv(self->new_socket, buffer, lenght, 0);
-}
-
-int socket_shutdown(socket_t *self, int how) {
-    return shutdown(self->socket, how);
 }
 
 int socket_close(socket_t *self) {

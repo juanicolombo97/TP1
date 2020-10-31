@@ -22,11 +22,9 @@ int socket_bind(socket_t *self, int port);
 // FUncion que pone al socket en escuha para conecciones entrantes.
 int socket_listen(socket_t *self);
 
-// FUncion que recibe un mensaje de a bytes y los lee hasta recibir el mensaje completo.
+// FUncion que recibe un mensaje de a bytes y los lee hasta recibir el
+// mensaje completo.
 int socket_receive(socket_t *self, void* buffer, size_t lenght);
-
-// FUncion que apaga el socket.
-int socket_shutdown(socket_t *self, int how);
 
 // Funcion que cierra el socket
 int socket_close(socket_t *self);

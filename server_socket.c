@@ -10,10 +10,10 @@
 #include "common_socket.h"
 #include "common_cifrado.h"
 
-void server_desifrar_mensaje(char* buf, char* method, void* key, int bytes_recibidos) {
+void server_desifrar_mensaje(char* buf, char* method, void* key, int bytes_r) {
    cifrado_t cifrado;
    cifrado_create(&cifrado, method, key);
-   cifrado_desencriptar(&cifrado, buf, bytes_recibidos);
+   cifrado_desencriptar(&cifrado, buf, bytes_r);
    fwrite(buf, 1, sizeof(buf), stdout);
 }
 
@@ -29,12 +29,12 @@ void server_r(int socket_rec, socket_t socket, char* method, void* key) {
    int total_bytes_received = 0;
    bool valid_socket = true;
    while (total_bytes_received < MAXMESSAGE && valid_socket) {
-      char *buf = (char*)calloc(MAXCHAR, sizeof(buf));
+      char *buf = (char*)calloc(MAXCHAR, sizeof(char));
       int bytes_recibidos = socket_receive(&socket,buf, socket_rec);
       if (bytes_recibidos <= 0) {
          valid_socket = false;
          free(buf);
-         break;
+         continue;
       }
       server_desifrar_mensaje(buf, method, key, bytes_recibidos);
       free(buf);

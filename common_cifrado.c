@@ -68,15 +68,19 @@ void cifrado_rc4(cifrado_t *self, size_t s, char *m,  void(*f)(char*, int)) {
     }
 }
 
-void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[], int vClave[]){
+void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[], int vCla[]){
     size_t tamanio = strlen(self->key);
     int contador = 0;
     for (int i = 0; i < VECTORLEN; i++) {
         if (tamanio == contador) {
+            self->key -= contador;
             contador = 0;
         }
         vector[i] = i;
-        vClave[i] = *(char*)(self->key + contador);
+        printf("%d ", i);
+        int clave = *(int*)self->key;
+        vCla[i] = clave;
+        self->key++;
         contador++;
     } 
 }

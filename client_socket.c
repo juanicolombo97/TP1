@@ -25,11 +25,11 @@ void client_send_message(socket_t socket,char* p_method, void* p_key) {
     }
 }
 
-void client_enviar_mensaje_socket(socket_t socket, char* buffer,size_t bytes_read) {
+void client_enviar_mensaje_socket(socket_t socket, char* buffer,size_t byte_r) {
    int bytes_sent = 0;
    bool valid_socket = true;
-   while (bytes_sent < bytes_read && valid_socket) {
-      int bytes_leidos = socket_send(&socket, buffer, bytes_read);
+   while (bytes_sent < byte_r && valid_socket) {
+      int bytes_leidos = socket_send(&socket, buffer, byte_r);
       if (bytes_leidos <= 0) {
          valid_socket = false;
       } else {

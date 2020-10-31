@@ -12,7 +12,7 @@ void server_desifrar_mensaje(char* buf, char* method, void* key) {
    cifrado_t cifrado;
    cifrado_create(&cifrado, method, key);
    cifrado_desencriptar(&cifrado, buf, bytes_recibidos);
-   printf("%s", buf);
+   fwrite(buf, 1, sizeof(buf), stdout);
 }
 
 void server_start(int p_port,char* p_method,void * p_key) {

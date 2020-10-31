@@ -4,7 +4,7 @@
 #include "client_socket.h"
 
 
-
+// Funcion que inicia el TDA client_socket.c
 void iniciar_client(char* argv[]) {
    long p_port = strtol(argv[2], NULL, 10);
    char *p_method = argv[3] + 9;
@@ -13,6 +13,7 @@ void iniciar_client(char* argv[]) {
    client_start(p_port, p_method, p_key, p_ip);
 }
 
+// Funcion main recibe parametro y para a iniciar_client
 int main(int argc, char *argv[]) {
    if (argc < 3){
       return 0;

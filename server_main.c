@@ -3,7 +3,7 @@
 #include <string.h>
 #include "server_socket.h"
 
-
+// FUncion que inicializa el server_socket
 void iniciar_server(char* argv[]) {
    long p_port = strtol(argv[1], NULL, 10);
    char *p_method = argv[2] + 9;

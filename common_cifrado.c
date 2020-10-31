@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "common_cifrado.h"
+#define VECTORLEN 256
+#define MAXMES 64
 
 void cifrado_create(cifrado_t *self, char *method, void *key) {
     self->method = method;
@@ -35,11 +37,11 @@ void cifrado_cesar(cifrado_t *self, char* m, size_t s,  void(*f)(char*, int)) {
 }
 
 void cifrado_proceso_encriptar(char* message, int key) {
-    *message = ((*message + key) % 256);
+    *message = ((*message + key) % VECTORLEN);
 }
 
 void cifrado_proceso_desencriptar(char* message, int key) {
-    *message = ((*message - key) % 256);
+    *message = ((*message - key) % VECTORLEN);
 }
 
 void cifrado_v(cifrado_t *self, char* m, size_t s, void(*f)(char*, int)) {
@@ -56,7 +58,7 @@ void cifrado_v(cifrado_t *self, char* m, size_t s, void(*f)(char*, int)) {
 }
 
 void cifrado_rc4(cifrado_t *self, size_t s, char *m,  void(*f)(char*, int)) {
-    int vector[256], vectorClave[256],resultado[64];
+    int vector[VECTORLEN], vectorClave[VECTORLEN], resultado[MAXMES];
     cifrado_rc4_inicializar_vectores(self, vector, vectorClave);
     cifrado_rc4_ksa(self, vector, vectorClave);
     cifrado_rc4_prga(self, vector, s, m, resultado);
@@ -69,7 +71,7 @@ void cifrado_rc4(cifrado_t *self, size_t s, char *m,  void(*f)(char*, int)) {
 void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[], int vClave[]){
     size_t tamanio = strlen(self->key);
     int contador = 0;
-    for (int i = 0; i < 256; i++) {
+    for (int i = 0; i < VECTORLEN; i++) {
         if (tamanio == contador) {
             contador = 0;
         }
@@ -82,9 +84,9 @@ void cifrado_rc4_inicializar_vectores(cifrado_t *self,int vector[], int vClave[]
 void cifrado_rc4_ksa(cifrado_t *self, int vector[], int vClave[]){
     int i = 0;
     int j = 0;
-    for (i = 0; i < 256; i++) {
+    for (i = 0; i < VECTORLEN; i++) {
         int key_char = vClave[i];
-        j = (j + vector[i] + key_char) % 256;
+        j = (j + vector[i] + key_char) % VECTORLEN;
         cifrado_rc4_swap(self, vector, i , j);
     }
 }
@@ -99,14 +101,10 @@ void cifrado_rc4_prga(cifrado_t *self, int v[], size_t s, char *m, int r[]) {
     int i = 0;
     int j = 0;
     for (int x = 0; x < s; x++) {
-        i = (i + 1) % 256;
-        j = (j + v[j]) % 256;
+        i = (i + 1) % VECTORLEN;
+        j = (j + v[j]) % VECTORLEN;
         cifrado_rc4_swap(self, v, i, j);
-        r[x]=v[(v[i] + v[j]) % 256];
+        r[x]=v[(v[i] + v[j]) % VECTORLEN];
     }
-}
-
-void cifrado_destroy(cifrado_t *self) {
-    //do nothing
 }
 

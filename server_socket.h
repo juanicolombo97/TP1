@@ -7,6 +7,6 @@
 
 void server_start(int p_port,char* p_method,void * p_key);
 
-void server_desifrar_mensaje(char* buf, char* method, void* key);
+void server_desifrar_mensaje(char* buf, char* method, void* key, int bytes_recibidos);
 
 #endif
